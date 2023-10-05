@@ -1,5 +1,7 @@
 package ru.hogwarts.school.dto;
 
+import java.util.Objects;
+
 public class FacultyDtoOut {
 
     private Long id;
@@ -38,5 +40,27 @@ public class FacultyDtoOut {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FacultyDtoOut that = (FacultyDtoOut) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(color, that.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, color);
+    }
+
+    @Override
+    public String toString() {
+        return '{' +
+                "id=" + id +
+                ", name=" + name +
+                ", color=" + color +
+                '}';
     }
 }
