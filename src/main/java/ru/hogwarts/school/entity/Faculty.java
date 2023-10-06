@@ -17,6 +17,15 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private Set<Student> students;
 
+    public Faculty() {
+    }
+
+    public Faculty(Long id, String name, String color) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -53,5 +62,15 @@ public class Faculty {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return '{' +
+                "\"id\":" + id +
+                ",\"name\":\"" + name +
+                "\",\"color\":\"" + color +
+                "\""+
+                '}';
     }
 }
