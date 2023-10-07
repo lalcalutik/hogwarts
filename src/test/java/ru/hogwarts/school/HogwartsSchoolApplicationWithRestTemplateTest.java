@@ -17,12 +17,12 @@ import ru.hogwarts.school.dto.StudentDtoOut;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.hogwarts.school.constants.HogwartsSchoolApplicationTestsConstants.*;
+import static ru.hogwarts.school.constants.HogwartsSchoolApplicationWithRestTemplateConstants.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class HogwartsSchoolApplicationTests {
+class HogwartsSchoolApplicationWithRestTemplateTest {
 
     @LocalServerPort
     private int port;

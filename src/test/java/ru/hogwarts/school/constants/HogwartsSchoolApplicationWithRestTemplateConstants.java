@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class HogwartsSchoolApplicationTestsConstants {
+public class HogwartsSchoolApplicationWithRestTemplateConstants {
 
     public static final Long FACULTY_ID_1 = 1L;
     public static final Long FACULTY_ID_2 = 2L;
@@ -86,7 +86,6 @@ public class HogwartsSchoolApplicationTestsConstants {
     public static final Collection<StudentDtoOut> ALL_STUDENTS_AFTER_EDIT = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
             STUDENT_DTO_OUT_3_EDIT
-            //STUDENT_DTO_OUT_2_EDIT
             ));
     public static final Collection<StudentDtoOut> ALL_STUDENTS_AFTER_REMOVE = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
