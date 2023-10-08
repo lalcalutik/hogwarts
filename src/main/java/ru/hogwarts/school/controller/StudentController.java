@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.dto.FacultyDtoOut;
 import ru.hogwarts.school.dto.StudentDtoIn;
 import ru.hogwarts.school.dto.StudentDtoOut;
+import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
@@ -42,6 +43,21 @@ public class StudentController {
     @GetMapping("{id}/faculty")
     public FacultyDtoOut getStudentFaculty(@PathVariable Long id) {
         return studentService.getFacultyByStudentId(id);
+    }
+
+    @GetMapping("count")
+    public Long getNumberOfAllStudents() {
+        return studentService.calculateNumberOfAllStudents();
+    }
+
+    @GetMapping("average-age")
+    public Double getAverageAgeOfStudents() {
+        return studentService.calculateAverageAge();
+    }
+
+    @GetMapping("five-last")
+    public Collection<Student> getLastFiveStudents() {
+        return studentService.getLastFiveStudents();
     }
 
     @PutMapping("{id}")

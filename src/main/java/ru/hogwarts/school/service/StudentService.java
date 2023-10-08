@@ -13,6 +13,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -59,11 +60,6 @@ public class StudentService {
         return studentMapper.toDto(student);
     }
 
-/*    public Collection<StudentDtoOut> getStudentsByAge(int age) {
-        return studentRepository.findByAge(age).stream()
-                .map(studentMapper::toDto)
-                .toList();
-    }*/
 
     public Collection<StudentDtoOut> getStudentsByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findByAgeBetween(minAge, maxAge).stream()
@@ -73,5 +69,17 @@ public class StudentService {
 
     public FacultyDtoOut getFacultyByStudentId(Long id) {
         return facultyMapper.toDto(studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id)).getFaculty());
+    }
+
+    public Long calculateNumberOfAllStudents() {
+        return studentRepository.countAllStudents();
+    }
+
+    public Double calculateAverageAge() {
+        return studentRepository.averageAge();
+    }
+
+    public Collection<Student> getLastFiveStudents() {
+        return studentRepository.getLastFiveStudents();
     }
 }

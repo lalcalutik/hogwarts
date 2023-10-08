@@ -73,7 +73,7 @@ public class Student {
         this.faculty = faculty;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return '{' +
                 "\"id\":" + id +
@@ -81,5 +81,5 @@ public class Student {
                 "\",\"age\":" + age +
                 ",\"faculty\":" + faculty +
                 '}';
-    }
+    }*/
 }
