@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.dto.FacultyDtoIn;
 import ru.hogwarts.school.dto.FacultyDtoOut;
@@ -21,6 +23,8 @@ public class FacultyService {
     private final FacultyMapper facultyMapper;
     private final StudentMapper studentMapper;
 
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
+
     public FacultyService(FacultyRepository facultyRepository,
                           StudentRepository studentRepository,
                           FacultyMapper facultyMapper,
@@ -33,39 +37,55 @@ public class FacultyService {
 
 
     public FacultyDtoOut createFaculty(FacultyDtoIn facultyDtoIn) {
-        return facultyMapper.toDto(facultyRepository.save(facultyMapper.toEntity(facultyDtoIn)));//TODO:exist check
+        logger.info("Was invoked createFaculty method");
+        return facultyMapper.toDto(facultyRepository.save(facultyMapper.toEntity(facultyDtoIn)));
     }
 
     public FacultyDtoOut getFaculty(Long id) {
-        return facultyMapper.toDto(facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id)));
+        logger.info("Was invoked getFaculty method");
+        return facultyMapper.toDto(facultyRepository.findById(id).orElseThrow(() -> {
+            logger.error(String.format("Faculty with id = %d not found!", id));
+            return new FacultyNotFoundException(id);
+        }));
     }
 
     public Collection<FacultyDtoOut> getAllFaculties() {
+        logger.info("Was invoked getAllFaculties method");
         return facultyRepository.findAll().stream()
                 .map(facultyMapper::toDto)
                 .toList();
     }
 
     public FacultyDtoOut editFaculty(Long id, FacultyDtoIn facultyDtoIn) {
-        Faculty oldFaculty = facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
+        logger.info("Was invoked editFaculty method");
+        Faculty oldFaculty = facultyRepository.findById(id).orElseThrow(() -> {
+            logger.error(String.format("Faculty with id = %d not found!", id));
+            return new FacultyNotFoundException(id);
+        });
         oldFaculty.setName(facultyDtoIn.getName());
         oldFaculty.setColor(facultyDtoIn.getColor());
         return facultyMapper.toDto(facultyRepository.save(oldFaculty));
     }
 
     public FacultyDtoOut removeFaculty(Long id) {
-        Faculty faculty = facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
+        logger.info("Was invoked removeFaculty method");
+        Faculty faculty = facultyRepository.findById(id).orElseThrow(() -> {
+            logger.error(String.format("Faculty with id = %d not found!", id));
+            return new FacultyNotFoundException(id);
+        });
         facultyRepository.delete(faculty);
         return facultyMapper.toDto(faculty);
     }
 
     public Collection<FacultyDtoOut> getFacultiesByColorOrName(String colorOrName) {
+        logger.info("Was invoked getFacultiesByColorOrName method");
         return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(colorOrName, colorOrName).stream()
                 .map(facultyMapper::toDto)
                 .toList();
     }
 
     public Collection<StudentDtoOut> getStudents(Long id) {
+        logger.info("Was invoked getStudents method");
         return studentRepository.findByFaculty_Id(id).stream()
                 .map(studentMapper::toDto)
                 .toList();
