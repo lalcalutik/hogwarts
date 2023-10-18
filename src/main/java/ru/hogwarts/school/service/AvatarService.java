@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ public class AvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     public AvatarService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
@@ -33,7 +37,11 @@ public class AvatarService {
 
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException(studentId));
+        logger.info("Was invoked uploadAvatar method");
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> {
+            logger.error(String.format("Student with id = %d not found!", studentId));
+            return new StudentNotFoundException(studentId);
+        });
         Path filePath = Path.of(avatarsDir, student + "." + StringUtils.getFilenameExtension(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
@@ -55,10 +63,12 @@ public class AvatarService {
     }
 
     public Avatar getAvatarByStudentID(Long studentId) {
+        logger.info("Was invoked getAvatarByStudentID method");
         return avatarRepository.findByStudent_Id(studentId).orElse(new Avatar());
     }
 
     public Collection<String> getAllAvatars(Integer page, Integer pageSize) {
+        logger.info("Was invoked getAllAvatars method");
         PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent().stream()
                 .map(Avatar::getFilePath)
