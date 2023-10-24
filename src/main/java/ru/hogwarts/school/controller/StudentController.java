@@ -70,6 +70,16 @@ public class StudentController {
         return studentService.calculateAverageAge2();
     }
 
+    @GetMapping("threads-task-1")
+    public void printStudents() {
+        studentService.printStudents();
+    }
+
+    @GetMapping("threads-task-2")
+    public void printStudentsSync() {
+        studentService.printStudentsSync();
+    }
+
     @PutMapping("{id}")
     public StudentDtoOut editStudent(@PathVariable Long id, @RequestBody StudentDtoIn studentDtoIn) {
         return studentService.editStudent(id, studentDtoIn);
