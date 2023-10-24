@@ -42,6 +42,16 @@ public class FacultyController {
         return facultyService.getStudents(id);
     }
 
+    @GetMapping("longest-name")
+    public String getLongestName() {
+        return facultyService.getLongestName();
+    }
+
+    @GetMapping("sum")
+    public Integer getSum() {
+        return facultyService.getSum();
+    }
+
     @PutMapping("{id}")
     public FacultyDtoOut editFaculty(@PathVariable Long id, @RequestBody FacultyDtoIn facultyDtoIn) {
         return facultyService.editFaculty(id, facultyDtoIn);
