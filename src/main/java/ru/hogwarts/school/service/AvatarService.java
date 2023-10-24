@@ -42,7 +42,7 @@ public class AvatarService {
             logger.error(String.format("Student with id = %d not found!", studentId));
             return new StudentNotFoundException(studentId);
         });
-        Path filePath = Path.of(avatarsDir, student + "." + StringUtils.getFilenameExtension(avatarFile.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, student.hashCode() + "." + StringUtils.getFilenameExtension(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
